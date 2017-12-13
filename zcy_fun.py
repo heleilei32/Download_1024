@@ -29,7 +29,7 @@ def Process_SubPage(save_path, img_url):
 	bsObj = BeautifulSoup(start_html.text, 'html.parser')
 	print('子页面读取完毕，开始尝试处理图片')
 	img_ind = 1  # 下标
-	for a_img in bsObj.find("div", {"id": "read_tpc"}).findAll("img"):#处理图片
+	for a_img in bsObj.find_all("div", {"id": "read_tpc"}).find_all("img"):#处理图片
 		if ('src' in a_img.attrs):
 			print('图片URL为' + a_img.attrs['src'])
 			image = download_single_image(a_img.attrs['src'])

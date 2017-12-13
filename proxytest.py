@@ -31,7 +31,7 @@ UserAgent_List = [
 	"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24",
 	"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
 ]
-URL_IP='http://www.youdaili.net/Daili/http/19733.html'#获取IP的网站
+URL_IP='http://1024.c2048ao.club/pw/thread.php?fid=3'#获取IP的网站
 URL_test='https://www.baidu.com/'#测试IP是否可用的的网站
 num_IP=10#准备采集多少个IP备用
 IP_test_timeout=1#测试IP时超过多少秒不响应就舍弃了
@@ -43,12 +43,13 @@ def IP_Test(IP,URL_test,set_timeout=IP_test_timeout):#测试IP地址是否可用
 		return True
 	except:
 		return False
-def get_IPlist(URL,test_URl='http://t3.9laik.live/pw/'):#获取可用的IP地址
+def get_IPlist(URL,test_URl='http://1024.c2048ao.club/pw/thread.php?fid=3'):#获取可用的IP地址
 	IP_list=[]
 	start_html = requests.get(URL, headers=headers)
+	print(start_html);
 	start_html.encoding = 'utf-8'
 	bsObj = BeautifulSoup(start_html.text, 'html.parser')
-	for span in bsObj.find("div", {"class": "content"}).findAll("span"):
+	for span in bsObj.find_all("div", {"class": "content"}):
 		span_IP=re.findall(r'\d+.\d+.\d+.\d+:\d+', span.text)
 		if IP_Test(span_IP,test_URl):#测试通过
 			IP_list.append(span_IP)
@@ -92,10 +93,10 @@ def download_single_image(image_url,proxy_flag=False,try_time=0):#首先尝试�
 					print('图片通过IP代理处理成功！')
 					return image_html  # 代理成功下载！
 				else:
-					return = download_single_image(image_url, proxy_flag=True, try_time=(try_time + 1))
+					return  download_single_image(image_url, proxy_flag=True, try_time=(try_time + 1))
 			except:
 				print('IP代理下载失败')
-				return = download_single_image(image_url, proxy_flag=True, try_time=(try_time+1))  # 否则调用自己，使用3次IP代理
+				return  download_single_image(image_url, proxy_flag=True, try_time=(try_time+1))  # 否则调用自己，使用3次IP代理
 		else:
 			print('图片未能下载')
 			return None
